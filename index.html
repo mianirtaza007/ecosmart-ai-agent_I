@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSmart - AI Climate Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <div class="flex h-screen overflow-hidden">
+        <div class="w-64 bg-emerald-900 text-white flex flex-col justify-between">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold tracking-wider flex items-center gap-2">
+                    🌱 EcoSmart
+                </h1>
+                <p class="text-xs text-emerald-300 mt-1">AI-Powered Climate Action</p>
+                
+                <nav class="mt-10 space-y-2">
+                    <button onclick="switchTab('user')" id="btn-user" class="w-full text-left py-2.5 px-4 rounded transition bg-emerald-700 font-medium">
+                        👤 User Dashboard
+                    </button>
+                    <button onclick="switchTab('client')" id="btn-client" class="w-full text-left py-2.5 px-4 rounded transition hover:bg-emerald-800 text-emerald-100">
+                        🏢 Client Dashboard
+                    </button>
+                    <button onclick="switchTab('admin')" id="btn-admin" class="w-full text-left py-2.5 px-4 rounded transition hover:bg-emerald-800 text-emerald-100">
+                        ⚙️ Admin Control
+                    </button>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-emerald-800 text-xs text-emerald-300 text-center">
+                Assignment Suite v1.0
+            </div>
+        </div>
+
+        <div class="flex-1 flex flex-col overflow-y-auto">
+            
+            <div id="tab-user" class="p-8 space-y-6">
+                <div class="border-b pb-4">
+                    <h2 class="text-3xl font-bold text-gray-900">User Carbon Footprint Suite</h2>
+                    <p class="text-gray-500">Calculate your daily impact and consult our live AI Agent.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-semibold text-emerald-800 mb-4 flex items-center gap-2">🚗 Footprint Calculator</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Car miles driven today</label>
+                                <input type="number" id="miles" placeholder="e.g. 15" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Electricity usage (kWh)</label>
+                                <input type="number" id="kwh" placeholder="e.g. 12" class="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none">
+                            </div>
+                            <button onclick="calculateImpact()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-xl transition">
+                                Calculate Footprint
+                            </button>
+                            
+                            <div id="calc-result" class="hidden mt-4 p-4 rounded-xl">
+                                <p class="text-sm text-gray-600">Estimated daily CO₂</p>
+                                <p id="calc-value" class="text-3xl font-bold my-1">0.00 kg</p>
+                                <p id="calc-status" class="text-sm font-semibold"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-[450px]">
+                        <h3 class="text-xl font-semibold text-emerald-800 mb-2 flex items-center gap-2">💬 Chat with EcoSmart AI</h3>
+                        <p class="text-xs text-gray-400 mb-4">Powered by Agent Logic Setup</p>
+                        
+                        <div id="chat-box" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-4 text-sm">
+                            <div class="bg-gray-100 p-3 rounded-xl max-w-[85%]">
+                                Hi! I'm EcoSmart 🌱 Ask me anything about reducing your carbon footprint, or calculate it first for personalized tips.
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <input type="text" id="chat-input" placeholder="Ask your AI Agent..." class="flex-1 px-4 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-emerald-500">
+                            <button onclick="sendMessage()" class="bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-client" class="p-8 space-y-6 hidden">
+                <div class="border-b pb-4">
+                    <h2 class="text-3xl font-bold text-gray-900">B2B Client Dashboard</h2>
+                    <p class="text-gray-500">Corporate ESG Metrics & Vision 2030 alignment overview.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <p class="text-sm text-gray-500 font-medium">ESG Score</p>
+                        <p class="text-3xl font-bold text-emerald-600 mt-2">A- (Excellent)</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <p class="text-sm text-gray-500 font-medium">Carbon Offset Progress</p>
+                        <p class="text-3xl font-bold text-gray-800 mt-2">64% Achieved</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                        <p class="text-sm text-gray-500 font-medium">Vision 2030 Alignment</p>
+                        <p class="text-3xl font-bold text-blue-600 mt-2">High Sync</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm max-w-2xl">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Renewable Energy Consumption (Vision 2030 Progress)</h3>
+                    <canvas id="clientChart"></canvas>
+                </div>
+            </div>
+
+            <div id="tab-admin" class="p-8 space-y-6 hidden">
+                <div class="border-b pb-4">
+                    <h2 class="text-3xl font-bold text-gray-900">Admin Control Suite</h2>
+                    <p class="text-gray-500">Global telemetry and simulation of hosted Kaggle climate datasets.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-400 font-medium">Total Active System Users</p>
+                            <p class="text-4xl font-extrabold text-gray-800 mt-1">1,248</p>
+                        </div>
+                        <span class="text-2xl">👥</span>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-400 font-medium">Total Global CO₂ Saved</p>
+                            <p class="text-4xl font-extrabold text-emerald-600 mt-1">14,290 kg</p>
+                        </div>
+                        <span class="text-2xl">🌍</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">📋 Historical Dataset Feed (Simulated from Kaggle)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-gray-50 text-gray-500 border-b">
+                                    <th class="p-3">Dataset ID</th>
+                                    <th class="p-3">Source Name</th>
+                                    <th class="p-3">Record Count</th>
+                                    <th class="p-3">Sync Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y text-gray-600">
+                                <tr>
+                                    <td class="p-3 font-mono text-xs">KAG-CLIM-2026</td>
+                                    <td class="p-3">Global Surface Temp Anomalies</td>
+                                    <td class="p-3">450,200</td>
+                                    <td class="p-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs">Connected</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-mono text-xs">KAG-CO2-GLOBAL</td>
+                                    <td class="p-3">Atmospheric CO2 Concentration ppm</td>
+                                    <td class="p-3">89,120</td>
+                                    <td class="p-3"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs">Connected</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            ['user', 'client', 'admin'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-${t}`).className = "w-full text-left py-2.5 px-4 rounded transition hover:bg-emerald-800 text-emerald-100";
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`btn-${tabId}`).className = "w-full text-left py-2.5 px-4 rounded transition bg-emerald-700 font-medium text-white";
+            if(tabId === 'client') loadChart();
+        }
+
+        function calculateImpact() {
+            const miles = parseFloat(document.getElementById('miles').value) || 0;
+            const kwh = parseFloat(document.getElementById('kwh').value) || 0;
+            const result = (miles * 0.4) + (kwh * 0.9);
+            
+            const resultDiv = document.getElementById('calc-result');
+            const valueText = document.getElementById('calc-value');
+            const statusText = document.getElementById('calc-status');
+            
+            valueText.innerText = `${result.toFixed(2)} kg`;
+            resultDiv.classList.remove('hidden');
+            
+            if(result > 15) {
+                resultDiv.className = "mt-4 p-4 rounded-xl bg-red-50 border border-red-100";
+                valueText.className = "text-3xl font-bold my-1 text-red-700";
+                statusText.innerText = "🚨 High impact — action recommended!";
+                statusText.className = "text-sm font-semibold text-red-600";
+            } else {
+                resultDiv.className = "mt-4 p-4 rounded-xl bg-green-50 border border-green-100";
+                valueText.className = "text-3xl font-bold my-1 text-green-700";
+                statusText.innerText = "✅ Eco-friendly level! Good job.";
+                statusText.className = "text-sm font-semibold text-green-600";
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const box = document.getElementById('chat-box');
+            if(!input.value.trim()) return;
+
+            box.innerHTML += `<div class="bg-emerald-100 p-3 rounded-xl max-w-[85%] ml-auto text-right text-emerald-900">${input.value}</div>`;
+            const userMsg = input.value;
+            input.value = '';
+            
+            // Mocking typing state
+            const loadingId = 'loading-' + Date.now();
+            box.innerHTML += `<div id="${loadingId}" class="bg-gray-100 p-3 rounded-xl max-w-[85%] text-gray-400 dynamic">EcoSmart AI is thinking...</div>`;
+            box.scrollTop = box.scrollHeight;
+
+            setTimeout(() => {
+                document.getElementById(loadingId).remove();
+                box.innerHTML += `<div class="bg-gray-100 p-3 rounded-xl max-w-[85%] text-gray-800">That is a crucial query regarding sustainability! I am currently configured with simulated response telemetry, ready to deploy live onto Vercel and handle active LM Arena production endpoints.</div>`;
+                box.scrollTop = box.scrollHeight;
+            }, 1000);
+        }
+
+        let chartRendered = false;
+        function loadChart() {
+            if(chartRendered) return;
+            const ctx = document.getElementById('clientChart').getContext('2xl');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2022', '2023', '2024', '2025', '2026'],
+                    datasets: [{
+                        label: 'Renewable Power %',
+                        data: [12, 18, 29, 44, 64],
+                        borderColor: '#059669',
+                        tension: 0.3,
+                        fill: true,
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)'
+                    }]
+                }
+            });
+            chartRendered = true;
+        }
+    </script>
+</body>
+</html>
